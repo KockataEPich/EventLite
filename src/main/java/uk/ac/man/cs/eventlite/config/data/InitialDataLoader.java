@@ -1,5 +1,8 @@
 package uk.ac.man.cs.eventlite.config.data;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Event;
 
 @Component
 @Profile({ "default", "test" })
@@ -30,8 +34,13 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			log.info("Database already populated. Skipping data initialization.");
 			return;
 		}
-
-		// Build and save initial models here.
+//
+//		// Build and save initial models here.
+//		Event e = new Event();
+//		e.setName("HEllo");
+//		e.setDate(LocalDate.of(2020, 12, 12));
+//		e.setTime(LocalTime.MIDNIGHT);
+//		eventService.save(e);
 
 	}
 }
