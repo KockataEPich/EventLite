@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Component
 @Profile({ "default", "test" })
@@ -32,6 +33,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 		}
 
 		// Build and save initial models here.
+		Venue venue= new Venue();
+		venue.setCapacity(70);
+		venue.setName("Kilburn, LF31");
+		venue.setId(1);
+		venueService.save(venue);
 
 	}
 }
