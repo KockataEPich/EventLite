@@ -34,12 +34,14 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findAll();
 	}
 
-	public <S extends Venue> S save(S entity){
-	    return event.Repository.save(entity);
-	}
+//	@Override
+//	public <S extends Venue> Iterable<S> saveAll(Iterable<S> entities) {
+//		return event.Repository.saveAll(entities);
 	@Override
-	public <S extends Venue> Iterable<S> saveAll(Iterable<S> entities) {
-		return event.Repository.saveAll(entities);
+	public Event save(Event event) {
+		// TODO Auto-generated method stub
+		return eventRepository.save(event);
 	}
+	
 
 }
