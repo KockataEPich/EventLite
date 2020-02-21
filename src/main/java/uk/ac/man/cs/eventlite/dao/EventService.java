@@ -10,5 +10,4 @@ public interface EventService {
 	
 	public Event save(Event event);
 
-//	public Event saveAll
 }

@@ -31,17 +31,16 @@ public class EventServiceImpl implements EventService {
 	}
 	@Override
 	public Iterable<Event> findAll() {
-		return eventRepository.findAll();
+		return eventRepository.findByOrderByDateAscTimeAsc();
 	}
 
-//	@Override
-//	public <S extends Venue> Iterable<S> saveAll(Iterable<S> entities) {
-//		return event.Repository.saveAll(entities);
 	@Override
 	public Event save(Event event) {
 		// TODO Auto-generated method stub
 		return eventRepository.save(event);
 	}
+	
+
 	
 
 }

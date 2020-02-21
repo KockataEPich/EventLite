@@ -41,6 +41,10 @@ public class Event {
 		setTime(time);
 		setVenue(v);
 	}
+	
+	public Event() {
+		//Default Const
+	}
 
 	public long getId() {
 		return id;
