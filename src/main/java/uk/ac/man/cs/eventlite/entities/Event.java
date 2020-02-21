@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,10 +29,17 @@ public class Event {
 	private LocalTime time;
 
 	private String name;
+	
+    @ManyToOne
+    private Venue venue;
+	
 
-	private long venue;
-
-	public Event() {
+	public Event(long id, LocalDate date, LocalTime time, String name, Venue v) {
+		setId(id);
+		setName(name);
+		setDate(date);
+		setTime(time);
+		setVenue(v);
 	}
 
 	public long getId() {
@@ -66,11 +74,11 @@ public class Event {
 		this.name = name;
 	}
 
-	public long getVenue() {
+	public Venue getVenue() {
 		return venue;
 	}
 
-	public void setVenue(long venue) {
+	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}
 }

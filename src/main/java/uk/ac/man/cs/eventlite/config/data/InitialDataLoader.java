@@ -35,33 +35,38 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 			log.info("Database already populated. Skipping data initialization.");
 			return;
 		}
-//
-//		// Build and save initial models here.
-		Event AlgoLec = new Event();
-		AlgoLec.setId(1);
-		AlgoLec.setName("Algorithms Lecture ");
-		AlgoLec.setDate(LocalDate.of(2020, 2, 24));
-		AlgoLec.setTime(LocalTime.of(10,0,0));
-		AlgoLec.setVenue(1);
-        eventService.save(AlgoLec);
-        
-        Venue venue1 = new Venue();
-        venue1.setId(1);
-        venue1.setName("Chemistry Lecture Theatre C.051");
-        venue1.setCapacity(200);
-        venueService.save(venue1);
-        
-        Event Random = new Event();
-        Random.setId(2);
-		Random.setName("Random");
-		Random.setDate(LocalDate.of(2020, 2, 12));
-		Random.setTime(LocalTime.now());
-		Random.setVenue(2);
-		eventService.save(Random);
-        
-        Venue venue2 = new Venue();
-        venue2.setName("Quiet Lab");
-        venue2.setCapacity(20);
-        venueService.save(venue2);
+
+		else{// Build and save initial models here.
+			Venue venue1 = new Venue(1, "Chemistry Lecture Theatre C.051", 200);
+//		    venue1.setId(1);
+//	        venue1.setName("Chemistry Lecture Theatre C.051");
+//	        venue1.setCapacity(200);
+	        venueService.save(venue1);
+	        
+			Event AlgoLec = new Event(1, LocalDate.of(2020, 2, 24), LocalTime.of(10,0), "Algorithms Lecture", venue1);
+//			AlgoLec.setId(1);
+//			AlgoLec.setName("Algorithms Lecture ");
+//			AlgoLec.setDate(LocalDate.of(2020, 2, 24));
+//			AlgoLec.setTime(LocalTime.of(10,0,0));
+//			AlgoLec.setVenue(venue1);
+		    eventService.save(AlgoLec);
+		     
+		    
+	        
+	        Venue venue2 = new Venue(2, "Kilburn G23", 40);
+//	        venue2.setName("Quiet Lab");
+//	        venue2.setCapacity(20);
+	        venueService.save(venue2);
+	        
+	        Event SoftEngg = new Event(2, LocalDate.of(2020, 2, 12), LocalTime.now(), "Software Engg", venue1);
+//	        Random.setId(2);
+//			Random.setName("Random");
+//			Random.setDate(LocalDate.of(2020, 2, 12));
+//			Random.setTime(LocalTime.now());
+//			Random.setVenue(venue2);
+			eventService.save(SoftEngg);
+	        
+	        
+		}     
     }
 }
