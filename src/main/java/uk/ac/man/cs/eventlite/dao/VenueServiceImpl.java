@@ -57,10 +57,12 @@ public class VenueServiceImpl implements VenueService {
 		return venueRepository.findAll();
 	}
 	
+	public <S extends Venue> S save(S entity){
+	    return venue.Repository.save(entity);
+	}
 	@Override
-	public Venue save(Venue venue) {
-		return venueRepository.save(venue);
+	public <S extends Venue> Iterable<S> saveAll(Iterable<S> entities) {
+		return venue.Repository.saveAll(entities);
 	}
 	
-
 }
