@@ -34,8 +34,7 @@ public class Event {
     private Venue venue;
 	
 
-	public Event(long id, LocalDate date, LocalTime time, String name, Venue v) {
-		setId(id);
+	public Event(LocalDate date, LocalTime time, String name, Venue v) {
 		setName(name);
 		setDate(date);
 		setTime(time);

@@ -23,8 +23,7 @@ public class Venue {
 	
 	private int capacity;
 
-	public Venue(long id, String name, int capacity) {
-		setId(id);
+	public Venue(String name, int capacity) {
 		setName(name);
 		setCapacity(capacity);
 	}
