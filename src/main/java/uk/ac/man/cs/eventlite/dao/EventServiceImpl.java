@@ -29,9 +29,20 @@ public class EventServiceImpl implements EventService {
 	public long count() {
 		return eventRepository.count();
 	}
+	
 	@Override
 	public Iterable<Event> findAll() {
 		return eventRepository.findByOrderByDateAscTimeAsc();
+	}
+	
+	@Override
+	public Iterable<Event> findByName(String name) {
+		return eventRepository.findAllByName(name);
+	}
+	
+	@Override
+	public Iterable<Event> findByNameContaining(String name) {
+		return eventRepository.findAllByNameContainingIgnoreCase(name);
 	}
 
 	@Override
