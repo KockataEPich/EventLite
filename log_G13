@@ -1,8 +1,22 @@
-Group Meeting Week4
+Group Meeting 1 Week4 19th Feb 11am
 Attended by - Chris, Yash, Adrian, Kostadin
 Task done:-
 1) As we were one week behind than other groups we first finished setting up on event lite for all members in eclipse 2018 i.e Excercise 0 was done of week 3.
 2) Excercise 1 front end for events was finished and pushed by Chris and front end of venues was done by adrian and pushed but there is some error after running on the localhost. On later figuring it out their issue with save method, and other linking issue which has to be checked.
 3) Back end(database set up) has to be done, Yash and Kostadin are having a look at it and will report accordingly today.
-3) Next meeting targets: To make sure week 3 excercises are done and we start with week 4.
+4) Next meeting targets: To make sure week 3 excercises are done and we start with week 4.
 
+Group Meeting 2 Week4 Friday 21st Feb 10am
+Attended by - Chris, Yash
+Task done:-
+1) Error of save function fixed, issue 1 and 2 successfully started working.
+2)Linking was the next part, issigned to Yash. After doing the linking part we tried to run the server but it didnt start, but build was not failing too. When asked 
+to TA we realised to make the entire we had to finish all issues of week 3.
+3) Next meeting was Software Engg workshop, and out targets were to fix everything by today workshop.
+
+Workshop / Group Meeting 3 Friday 21st Feb 3pm
+Attended by:- Chris, Yash, Adrian, Kostadin
+Task done:-
+1)All issues were given attempt and done upto some extent but didnt seem working. We later realised there was an issue in the Ordering part as we were trying to use predefined functions
+given in the workshop.
+2)After 10-15 minutes of checking by all TAs, we came to a conclusion that we cant use the predefined function but have to make the sorting done manually.
