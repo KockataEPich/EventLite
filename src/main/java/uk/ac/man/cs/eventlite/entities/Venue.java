@@ -1,14 +1,36 @@
 package uk.ac.man.cs.eventlite.entities;
 
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "venues")
 public class Venue {
 
+	@Id
+	@GeneratedValue
 	private long id;
 
 	private String name;
 
+	@OneToMany
+	private Set<Event> events;
+	
 	private int capacity;
 
+	public Venue(long id, String name, int capacity) {
+		setId(id);
+		setName(name);
+		setCapacity(capacity);
+	}
+
 	public Venue() {
+
 	}
 
 	public long getId() {
