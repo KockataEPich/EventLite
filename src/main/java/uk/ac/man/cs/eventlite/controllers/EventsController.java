@@ -6,8 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
@@ -28,6 +32,13 @@ public class EventsController {
 		model.addAttribute("events", eventService.findAll());
 //		model.addAttribute("venues", venueService.findAll());
 
+		return "events/index";
+	}
+	
+	@RequestMapping(value= "/search", method= RequestMethod.GET)
+	public String findEventByName(@RequestParam (value= "search", required= false) String name, Model model) {
+		model.addAttribute("search", eventService.findByName(name));
+		model.addAttribute("search", eventService.findByNameContaining(name));
 		return "events/index";
 	}
 

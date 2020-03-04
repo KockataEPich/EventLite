@@ -9,7 +9,11 @@ public interface EventService {
     public long count();
 
     public Iterable<Event> findAll();
-
+	
+	public Iterable<Event> findByName(String name);
+	
+	public Iterable<Event> findByNameContaining(String name);
+    
     public Event save(Event event);
 
     public Event delete(Event event);
