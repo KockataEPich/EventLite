@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
@@ -40,7 +41,10 @@ public class EventsController {
 		if (!model.containsAttribute("event")) {
 			model.addAttribute("event", new Event());
 		}
+		
+		Iterable<Venue> allVenues = venueService.findAll();
 
+		model.addAttribute("allVenues", allVenues);
 		return "events/new";
 	}
 	

@@ -24,16 +24,12 @@
         <input class="form-control" th:field="*{time}" type="time" name="time" id="time" placeholder="Event time" autofocus="autofocus" />
 		<p class="text-danger" th:if="${#fields.hasErrors('time')}" th:errors="*{time}">errors</p>
         
-        <label for="venue">Event venue</label>
-		  <select th:field="*{newVenue}">
-			<option
-			  th:each="dropdownValue : ${venue}"
-			  th:value=${dropdownValue}
-			  th:text=${dropdownValue}
-			  </option>
-		  </select>         
-        <input class="form-control" th:field="*{venue}" type="text" name="venue" id="venue" placeholder="Event venue" autofocus="autofocus" />
-		<p class="text-danger" th:if="${#fields.hasErrors('venue')}" th:errors="*{venue}">errors</p>
+        <label for="newVenue">Event venue</label>   
+		  <select name="newVenue" id="newVenue" th:field="*{newVenue}">
+		    <option value="volvo">hi
+		    </option>
+		  </select>
+		<p class="text-danger" th:if="${#fields.hasErrors('newVenue')}" th:errors="*{newVenue}">errors</p>
         
       </div>
     
