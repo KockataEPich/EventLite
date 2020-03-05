@@ -1,5 +1,7 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.util.Iterator;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +44,9 @@ public class EventsController {
 			model.addAttribute("event", new Event());
 		}
 		
+		//get all the venues so we can display them
 		Iterable<Venue> allVenues = venueService.findAll();
-
+	
 		model.addAttribute("allVenues", allVenues);
 		return "events/new";
 	}
@@ -56,7 +59,7 @@ public class EventsController {
 			model.addAttribute("event", event);
 			return "events/new";
 		}
-		
+		//save event passed over by the post request
 		eventService.save(event);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
 
