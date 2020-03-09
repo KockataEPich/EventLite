@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import uk.ac.man.cs.eventlite.dao.EventService;
-import uk.ac.man.cs.eventlite.dao.VenueService;
 import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 
@@ -74,6 +72,8 @@ public class EventsController {
 		//save event passed over by the post request
 		eventService.save(event);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
+		return "redirect:/events";
+	}
 
 	@RequestMapping(value= "/search", method= RequestMethod.GET)
 	public String findEventByName(@RequestParam (value= "search", required= false) String name, Model model) {
