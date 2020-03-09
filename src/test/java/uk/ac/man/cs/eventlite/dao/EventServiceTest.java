@@ -8,8 +8,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
 import uk.ac.man.cs.eventlite.EventLite;
+import uk.ac.man.cs.eventlite.services.EventService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = EventLite.class)
