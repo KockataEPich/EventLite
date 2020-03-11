@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +24,8 @@ public class Event {
 	@GeneratedValue
 	private long id;
 
+	@NotNull(message = "The event date cannot be empt.")
+	@Future
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
@@ -28,8 +34,14 @@ public class Event {
 	@DateTimeFormat(pattern = "HH:mm")
 	private LocalTime time;
 
+	@NotEmpty(message = "The event name cannot be empty.")
+	@Size(max = 256, message = "The event name must have 256 characters or less	.")
 	private String name;
 	
+	@Size(max = 500, message = "The event description must have 500 characters or less	.")
+	private String description;
+	
+	@NotNull(message = "The event venue cannot be empty.")
     @ManyToOne
     private Venue venue;
 	
@@ -81,6 +93,14 @@ public class Event {
 		return venue;
 	}
 
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+//	
 	public void setVenue(Venue venue) {
 		this.venue = venue;
 	}

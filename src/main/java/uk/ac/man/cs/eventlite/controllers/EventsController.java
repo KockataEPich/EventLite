@@ -48,6 +48,7 @@ public class EventsController {
 
 		return "events/index";
 	}
+	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newEvent(Model model) {
 		if (!model.containsAttribute("event")) {
@@ -67,8 +68,13 @@ public class EventsController {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("event", event);
+			//get all the venues so we can display them after error in form
+			Iterable<Venue> allVenues = venueService.findAll();
+		
+			model.addAttribute("allVenues", allVenues);
 			return "events/new";
 		}
+		
 		//save event passed over by the post request
 		eventService.save(event);
 		redirectAttrs.addFlashAttribute("ok_message", "New event added.");
