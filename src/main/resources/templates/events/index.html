@@ -25,6 +25,7 @@
       <th><i class="fas fa-map-marker-alt"></i> Venue</th>
       <th><i class="fas fa-calendar"></i> Date</th>
       <th><i class="fas fa-clock"></i> Time</th>
+      <th><i class="fas fa-edit"></i> Update</th>
       <th>
         <div sec:authorize="isAuthenticated()">
           <i class="fas fa-trash"></i> Delete
@@ -39,6 +40,9 @@
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+          <td>
+			<a  th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+        </td>
         </tr>
       </tbody>
       </div>
@@ -49,6 +53,9 @@
         <td th:text="${e.venue.name}">Event venue</td>
         <td th:text="${{e.date}}">Event date</td>
         <td th:text="${{e.time}}">Event time</td>
+        <td>
+			<a  th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+        </td>
         <td>
           <div sec:authorize="isAuthenticated()">
             <a th:href="@{events/delete/{id}(id=${e.id})}">Delete</a>
