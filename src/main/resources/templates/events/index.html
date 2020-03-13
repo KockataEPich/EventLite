@@ -11,7 +11,7 @@
         <form th:object="${event}" th:action="@{/events/search}" method="get">
             <div>
                 <label for="name">Search by name: </label>
-                <input type="text" name="search" th:value="${search}">
+                <input type="text" name="search">
                 <input type="submit" value="Search">
             </div>
         </form>
