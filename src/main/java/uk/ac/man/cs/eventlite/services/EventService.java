@@ -13,6 +13,8 @@ public interface EventService {
 	public Iterable<Event> findByName(String name);
 	
 	public Iterable<Event> findByNameContaining(String name);
+	
+	public Optional<Event> findById(long id);
     
     public Event save(Event event);
 
