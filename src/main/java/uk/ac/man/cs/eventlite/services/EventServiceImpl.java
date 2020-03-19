@@ -1,7 +1,5 @@
 package uk.ac.man.cs.eventlite.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.dao.EventRepository;
 import uk.ac.man.cs.eventlite.entities.Event;
@@ -11,11 +9,11 @@ import java.util.Optional;
 @Service
 public class EventServiceImpl implements EventService {
 
-    private final static Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
+    //private final static Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
 
     final EventRepository eventRepository;
 
-    private final static String DATA = "data/events.json";
+    //private final static String DATA = "data/events.json";
 
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -28,7 +26,7 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public Iterable<Event> findByNameContaining(String name) {
-		return eventRepository.findAllByNameContainingIgnoreCase(name);
+		return eventRepository.findAllByNameContainingIgnoreCaseOrderByDateAscName(name);
 	}
 	
 	@Override
