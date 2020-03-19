@@ -28,6 +28,12 @@
         <select class="form-control" name="venueSelect" id="venueSelect" th:field="*{venue}">        
           <option th:each="v : ${allVenues}" th:value="${v.id}" th:text="${v.name}"></option>
         </select>
+        <p class="text-danger" th:if="${#fields.hasErrors('venue')}" th:errors="*{venue}">errors</p>
+        
+		<label for="description">Event Description</label>
+		<input class="form-control" th:field="*{description}"  type="text" name="description" id="description" placeholder="Event description" autofocus="autofocus" />
+		<p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">errors</p>
+        
 
       </div>
     
