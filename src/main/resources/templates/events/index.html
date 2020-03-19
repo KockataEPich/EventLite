@@ -11,7 +11,7 @@
         <form th:object="${event}" th:action="@{/events/search}" method="get">
             <div>
                 <label for="name">Search by name: </label>
-                <input type="text" name="search" th:value="${search}">
+                <input type="text" name="search">
                 <input type="submit" value="Search">
             </div>
         </form>
@@ -26,6 +26,7 @@
       <th><i class="fas fa-calendar"></i> Date</th>
       <th><i class="fas fa-clock"></i> Time</th>
 	  <th><i class="fas fa-align-justify"></i> Description</th>      
+      <th><i class="fas fa-edit"></i> Update</th>
       <th>
         <div sec:authorize="isAuthenticated()">
           <i class="fas fa-trash"></i> Delete
@@ -41,6 +42,14 @@
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
           <td th:text="${{e.description}}">Event description</td>
+          <td>
+			  <a  th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+          </td>
+          <td>
+            <div sec:authorize="isAuthenticated()">
+              <a th:href="@{events/delete/{id}(id=${e.id})}">Delete</a>
+            </div>
+          </td>
         </tr>
       </tbody>
       </div>
@@ -52,6 +61,9 @@
         <td th:text="${{e.date}}">Event date</td>
         <td th:text="${{e.time}}">Event time</td>
         <td th:text="${{e.description}}">Event description</td>        
+        <td>
+			<a  th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+        </td>
         <td>
           <div sec:authorize="isAuthenticated()">
             <a th:href="@{events/delete/{id}(id=${e.id})}">Delete</a>

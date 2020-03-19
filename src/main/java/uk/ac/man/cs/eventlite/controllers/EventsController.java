@@ -102,7 +102,21 @@ public class EventsController {
 		model.addAttribute("users", eventService.findAll());
 		return "redirect:/events";
 	}
+	
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String renderUpdateEvent(@PathVariable("id") long id, Model model) {
+		model.addAttribute("event", eventService.findById(id));
+		Iterable<Venue> allVenues = venueService.findAll();
+		model.addAttribute("allVenues", allVenues);
+		return "/events/update";
+	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	public String updateEvent(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Event event,
+			BindingResult errors, Model model) {
+		eventService.save(event);
+		return "redirect:/events";
+	}
 }
 
 

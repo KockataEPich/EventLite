@@ -30,6 +30,11 @@ public class EventServiceImpl implements EventService {
 	public Iterable<Event> findByNameContaining(String name) {
 		return eventRepository.findAllByNameContainingIgnoreCase(name);
 	}
+	
+	@Override
+	public Optional<Event> findById(long id) {
+		return eventRepository.findById(id);
+	}
 
     @Override
     public long count() {
