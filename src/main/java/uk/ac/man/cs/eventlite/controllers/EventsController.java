@@ -28,5 +28,28 @@ public class EventsController {
 
 		return "events/index";
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "eventDetails/index/{id}")
+	public String getAllEventDetails(Model model, @PatVariable long id) {
+
+        Event eventGiven = null;
+        for(Event event : eventService.findAll()){
+            if(event.getId() == id){
+                eventGiven = event;
+            }
+        }
+            
+        if(eventGiven != null){
+            // adding attributes
+    		model.addAttribute("events", eventService.findAll());
+		    model.addAttribute("eventName", eventGiven.getName());
+	    	model.addAttribute("eventDescription", eventGiven.getDescription())
+	    	model.addAttribute("eventTime", eventGiven.getTime())
+	    	model.addAttribute("eventDate", eventGiven.getDate())
+	    	model.addAttribute("eventVenue", eventGiven.getVenue())
+
+        }
+		return "events/eventDetails/index";
+	}
 
 }
