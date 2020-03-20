@@ -13,7 +13,30 @@
   <div class="container">
     <h1>EventLite</h1>
 
-    <p>This is EventLite. See the <a href="/events">list of events</a> for more information.</p>
+    <h3>Event</h3>
+    <h5 th:text="${eventsName"> My Event</h5>
+    <br>
+    
+    <h3>Event Informtion</h3>
+    <h5 th:text="${eventsDescription"> My Event</h5>
+    <br>
+    
+    <h3>Venue</h3>
+    <h5 th:text="${eventsVenue"> My Event</h5>
+    <br>
+    
+    <h3>Date</h3>
+    <h5 th:text="${eventsDate"> My Event</h5>
+    <br>
+    
+    <h3>Time</h3>
+    <h5 th:text="${eventsTime"> My Event</h5>
+    <br>
+    
+        <form action = "#" th:action = "@{/events}" method = "GET"></form>
+            <button type = "submit">
+                <a href = "#" th:href = "@{/events/delete/} + ${id}"><i>Delete</i></a>
+            </button>
   </div>
 
   <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
