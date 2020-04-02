@@ -23,9 +23,12 @@ public class Venue {
 	
 	private int capacity;
 
-	public Venue(String name, int capacity) {
+	private String address;
+
+	public Venue(String name, int capacity, String address) {
 		setName(name);
 		setCapacity(capacity);
+		setAddress(address);
 	}
 
 	public Venue() {
@@ -54,5 +57,15 @@ public class Venue {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public String getAddress()
+	{
+		return this.address;
+	}
+
+	public void setAddress(String address)
+	{
+		this.address = address;
 	}
 }
