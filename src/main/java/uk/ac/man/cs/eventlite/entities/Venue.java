@@ -61,7 +61,7 @@ public class Venue {
 
 	public String getAddress()
 	{
-		return this.address;
+		return address;
 	}
 
 	public void setAddress(String address)
