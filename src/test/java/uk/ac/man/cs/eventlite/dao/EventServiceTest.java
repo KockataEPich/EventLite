@@ -26,7 +26,7 @@ public class EventServiceTest extends AbstractTransactionalJUnit4SpringContextTe
 	private EventService eventService;
 
 	// This class is here as a starter for testing any custom methods within the
-	// EventService. Note: It is currently @Ignored!
+	// EventService.
 	
 	@Test
 	public void testFindEventIfNameContains() throws Exception {
