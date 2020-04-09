@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import uk.ac.man.cs.eventlite.dao.EventService;
 import uk.ac.man.cs.eventlite.dao.VenueService;
+import uk.ac.man.cs.eventlite.entities.Event;
 
 @Controller
 @RequestMapping(value = "/events", produces = { MediaType.TEXT_HTML_VALUE })
@@ -30,7 +32,7 @@ public class EventsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "eventDetails/index/{id}")
-	public String getAllEventDetails(Model model, @PatVariable long id) {
+	public String getAllEventDetails(Model model, @PathVariable long id) {
 
         Event eventGiven = null;
         for(Event event : eventService.findAll()){
@@ -43,11 +45,11 @@ public class EventsController {
             // adding attributes
     		model.addAttribute("events", eventService.findAll());
 		    model.addAttribute("eventName", eventGiven.getName());
-	    	model.addAttribute("eventDescription", eventGiven.getDescription())
-	    	model.addAttribute("eventTime", eventGiven.getTime())
-	    	model.addAttribute("eventDate", eventGiven.getDate())
+	    	model.addAttribute("eventDescription", eventGiven.getDescription());
+	    	model.addAttribute("eventTime", eventGiven.getTime());
+	    	model.addAttribute("eventDate", eventGiven.getDate());
 	    	model.addAttribute("eventVenue", eventGiven.getVenue())
-
+;
         }
 		return "events/eventDetails/index";
 	}

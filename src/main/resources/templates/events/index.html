@@ -24,6 +24,7 @@
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
+          <td><a th:href="@{/events/eventDetails/index/{id}(id = ${e.id})}">Event Details</a>
         </tr>
       </tbody>
     </table>

@@ -43,7 +43,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 //	        venue1.setCapacity(200);
 	        venueService.save(venue1);
 	        
-			Event AlgoLec = new Event(LocalDate.of(2020, 2, 24), LocalTime.of(10,0), "Algorithms Lecture", venue1);
+			Event AlgoLec = new Event(LocalDate.of(2020, 2, 24), LocalTime.of(10,0), "Algorithms Lecture", venue1, "Lecture to be conducted by giles reger");
 //			AlgoLec.setId(1);
 //			AlgoLec.setName("Algorithms Lecture ");
 //			AlgoLec.setDate(LocalDate.of(2020, 2, 24));
@@ -58,7 +58,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 //	        venue2.setCapacity(20);
 	        venueService.save(venue2);
 	        
-	        Event SoftEngg = new Event(LocalDate.of(2020, 2, 12), LocalTime.now(), "Software Engg", venue2);
+	        Event SoftEngg = new Event(LocalDate.of(2020, 2, 12), LocalTime.now(), "Software Engg", venue2, "Worshop to be conducted by markel vigo");
 //	        Random.setId(2);
 //			Random.setName("Random");
 //			Random.setDate(LocalDate.of(2020, 2, 12));
