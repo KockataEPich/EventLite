@@ -8,15 +8,14 @@
 </head>
 <body>
   <div layout:fragment="content">
+  <h1>Events</h1>
+  
         <form th:object="${event}" th:action="@{/events/search}" method="get">
             <div>
-                <label for="name">Search by name: </label>
-                <input type="text" name="search">
-                <input type="submit" value="Search">
+                <input type="text" name="search" placeholder="Search for an event...">
+                <input type="submit" value="Search" class="btn btn-primary">
             </div>
         </form>
-  
-    <h1>Events</h1>
 
   <table class="table table-striped table-hover">
     <thead>

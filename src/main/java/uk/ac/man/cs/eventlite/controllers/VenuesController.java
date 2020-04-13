@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
@@ -35,7 +35,7 @@ public class VenuesController {
 	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newEvent(Model model) {
+	public String newVenue(Model model) {
 		if (!model.containsAttribute("venue")) {
 			model.addAttribute("venue", new Venue());
 		}
@@ -44,7 +44,7 @@ public class VenuesController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String createEvent(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
+	public String createVenue(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
 
 		if (errors.hasErrors()) {
@@ -56,6 +56,13 @@ public class VenuesController {
 		venueService.save(venue);
 		redirectAttrs.addFlashAttribute("ok_message", "New Venue added.");
 		return "redirect:/venues";
+	}
+	
+	@RequestMapping(value= "/search", method= RequestMethod.GET)
+	public String findVenueByName(@RequestParam (value= "search", required= false) String name, Model model) {
+		model.addAttribute("search", venueService.findByName(name));
+		model.addAttribute("search", venueService.findByNameContaining(name));
+		return "venues/index";
 	}
 }
 
