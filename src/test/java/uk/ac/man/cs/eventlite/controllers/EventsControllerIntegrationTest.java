@@ -2,9 +2,12 @@ package uk.ac.man.cs.eventlite.controllers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
 
+import org.apache.logging.log4j.status.StatusConsoleListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +25,17 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import ch.qos.logback.core.status.Status;
 import uk.ac.man.cs.eventlite.EventLite;
+import uk.ac.man.cs.eventlite.config.Security;
+import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
+
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = EventLite.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -32,6 +44,9 @@ import uk.ac.man.cs.eventlite.EventLite;
 public class EventsControllerIntegrationTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	private HttpEntity<String> httpEntity;
+	
+	@Autowired
+	private MockMvc mvc;
 
 	@Autowired
 	private TestRestTemplate template;
@@ -44,10 +59,5 @@ public class EventsControllerIntegrationTest extends AbstractTransactionalJUnit4
 		httpEntity = new HttpEntity<String>(headers);
 	}
 
-	@Test
-	public void testGetAllEvents() {
-		ResponseEntity<String> response = template.exchange("/events", HttpMethod.GET, httpEntity, String.class);
 
-		assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-	}
 }
