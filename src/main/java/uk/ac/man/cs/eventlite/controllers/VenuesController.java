@@ -49,6 +49,7 @@ public class VenuesController {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("venue", venue);
+			return "venues/new";
 		}
 		
 		//save event passed over by the post request
