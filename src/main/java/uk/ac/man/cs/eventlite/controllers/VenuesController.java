@@ -1,4 +1,6 @@
 package uk.ac.man.cs.eventlite.controllers;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mapbox.api.geocoding.v5.MapboxGeocoding;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.api.geocoding.v5.models.GeocodingResponse;
+import com.mapbox.geojson.Point;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
@@ -45,7 +55,7 @@ public class VenuesController {
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String createVenue(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
-			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
+			BindingResult errors, Model model, RedirectAttributes redirectAttrs) throws InterruptedException {
 
 		if (errors.hasErrors()) {
 			model.addAttribute("venue", venue);
@@ -53,6 +63,43 @@ public class VenuesController {
 		}
 		
 		//save event passed over by the post request
+
+		Point loc = Point.fromLngLat(venue.getLng(), venue.getLat());
+		
+		MapboxGeocoding mapboxGeocoding = MapboxGeocoding.builder()
+				.accessToken("pk.eyJ1IjoiY2hyaXNuaWsiLCJhIjoiY2s5MDJ0ZGNvMHhmNTNsdGE1aGNzODhhZiJ9.cDsPoQeKp5JCO4VzzL9lxA")
+				.query(venue.getAddress())
+				.build();
+		mapboxGeocoding.enqueueCall(new Callback<GeocodingResponse>() {
+			
+			@Override
+			public void onResponse(Call<GeocodingResponse> call, Response<GeocodingResponse> response) {
+				// TODO Auto-generated method stub
+				List<CarmenFeature> results = response.body().features();			
+				
+				if (results.size() > 0) {
+					 
+				  // Log the first results Point.
+				  Point firstResultPoint = results.get(0).center();
+				  venue.setLng(firstResultPoint.longitude());
+				  venue.setLat(firstResultPoint.latitude());
+
+				} else {
+		 
+				  // No result for your request were found.
+		 
+				}
+			}
+			
+			@Override
+			public void onFailure(Call<GeocodingResponse> call, Throwable t) {
+				// TODO Auto-generated method stub
+				mapboxGeocoding.cancelCall();
+			}
+		});
+		Thread.sleep(1000L);
+
+		
 		venueService.save(venue);
 		redirectAttrs.addFlashAttribute("ok_message", "New Venue added.");
 		return "redirect:/venues";
