@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import uk.ac.man.cs.eventlite.entities.Event;
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
@@ -63,6 +65,20 @@ public class VenuesController {
 		model.addAttribute("search", venueService.findByName(name));
 		model.addAttribute("search", venueService.findByNameContaining(name));
 		return "venues/index";
+	}
+	
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String renderUpdateVenue(@PathVariable("id") long id, Model model) {
+		model.addAttribute("venue", venueService.findById(id));
+		Iterable<Event> allEvents = eventService.findAll();
+		model.addAttribute("allEvents", allEvents);
+		return "/venues/update";
+	}
+
+	public String updateVenue(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Venue venue,
+			BindingResult errors, Model model) {
+		venueService.save(venue);
+		return "redirect:/venues";
 	}
 }
 

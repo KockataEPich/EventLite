@@ -1,5 +1,7 @@
 package uk.ac.man.cs.eventlite.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.dao.VenueRepository;
@@ -15,6 +17,12 @@ public class VenueServiceImpl implements VenueService {
 	public long count() {
 		return venueRepository.count();
 	}
+	
+	@Override
+	public Optional<Venue> findById(long id) {
+		return venueRepository.findById(id);
+	}
+
 
 	@Override
 	public Iterable<Venue> findAll() {
