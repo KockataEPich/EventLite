@@ -75,6 +75,7 @@ public class VenuesController {
 		return "/venues/update";
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public String updateVenue(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Venue venue,
 			BindingResult errors, Model model) {
 		venueService.save(venue);
