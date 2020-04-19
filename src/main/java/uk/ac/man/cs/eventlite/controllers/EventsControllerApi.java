@@ -27,14 +27,13 @@ public class EventsControllerApi {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public Resources<Resource<Event>> getAllEvents() {
-
 		return eventToResource(eventService.findAll());
 	}
 
 	private Resource<Event> eventToResource(Event event) {
 		Link selfLink = linkTo(EventsControllerApi.class).slash(event.getId()).withSelfRel();
-
-		return new Resource<Event>(event, selfLink);
+		Link venueLink = linkTo(EventsControllerApi.class).slash(event.getId()).slash("venue").withRel("venue");
+		return new Resource<Event>(event, selfLink, venueLink);
 	}
 
 	private Resources<Resource<Event>> eventToResource(Iterable<Event> events) {
