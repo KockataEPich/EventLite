@@ -8,11 +8,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.ac.man.cs.eventlite.testutil.MessageConverterUtil.getMessageConverters;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collections;
 
 import javax.servlet.Filter;
@@ -36,6 +39,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import uk.ac.man.cs.eventlite.EventLite;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.services.EventService;
 
 @ExtendWith(SpringExtension.class)
@@ -92,5 +96,31 @@ public class EventsControllerApiTest {
 		verify(eventService).findAll();
 	}
 	
+	@Test
+	public void getEvent() throws Exception {
+		Venue v = new Venue("Venue", 0, "address");
+		Event e = new Event(LocalDate.now(), LocalTime.now(), "Event", v);
 
+		when(eventService.findOne(0)).thenReturn(e);
+		
+		mvc.perform(get("/api/events/0").accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(handler().methodName("getEvent"))
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+			
+			.andExpect(jsonPath("$.date", not(empty())))
+			.andExpect(jsonPath("$.time", not(empty())))
+			.andExpect(jsonPath("$.name", not(empty())))
+			
+			.andExpect(jsonPath("$._links.self.href", not(empty())))
+			.andExpect(jsonPath("$._links.self.href", endsWith("/api/events/0")))
+			
+			.andExpect(jsonPath("$._links.event.href", not(empty())))
+			.andExpect(jsonPath("$._links.event.href", endsWith("/api/events/0/event")))
+			
+			.andExpect(jsonPath("$._links.venue.href", not(empty())))
+			.andExpect(jsonPath("$._links.venue.href", endsWith("/api/events/0/venue")));
+			
+		verify(eventService).findOne(0);
+	}
 }
