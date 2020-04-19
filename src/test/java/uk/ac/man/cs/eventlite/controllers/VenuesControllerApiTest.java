@@ -118,11 +118,14 @@ public class VenuesControllerApiTest {
 			.andExpect(jsonPath("$._links.self.href", not(empty())))
 			.andExpect(jsonPath("$._links.self.href", endsWith("/api/venues/0")))
 			
-			.andExpect(jsonPath("$._links.event.href", not(empty())))
-			.andExpect(jsonPath("$._links.event.href", endsWith("/api/venues/0/event")))
+			.andExpect(jsonPath("$._links.events.href", not(empty())))
+			.andExpect(jsonPath("$._links.events.href", endsWith("/api/venues/0/events")))
 			
 			.andExpect(jsonPath("$._links.venue.href", not(empty())))
-			.andExpect(jsonPath("$._links.venue.href", endsWith("/api/venues/0/venue")));
+			.andExpect(jsonPath("$._links.venue.href", endsWith("/api/venues/0/venue")))
+			
+			.andExpect(jsonPath("$._links.next3events.href", not(empty())))
+			.andExpect(jsonPath("$._links.next3events.href", endsWith("/api/venues/0/next3events")));
 			
 		verify(venueService).findOne(0);
 	}
