@@ -10,6 +10,8 @@ public interface VenueService {
 	
 	public Optional<Venue> findById(long id);
 	
+	public Venue findOne(long id);
+	
     public Iterable<Venue> findAll();
 	
 	public Iterable<Venue> findByName(String name);
