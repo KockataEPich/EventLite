@@ -2,6 +2,18 @@ package uk.ac.man.cs.eventlite;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.IsNot.not;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.ac.man.cs.eventlite.testutil.MessageConverterUtil.getMessageConverters;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,6 +56,16 @@ public class HomePageTest {
 
 	@Test
 	public void getApiRoot() throws Exception {
-		mvc.perform(get("/api").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+		mvc.perform(get("/api").accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			
+			.andExpect(jsonPath("$._links.venues.href", not(empty())))
+			.andExpect(jsonPath("$._links.venues.href", endsWith("/api/venues")))
+			
+			.andExpect(jsonPath("$._links.events.href", not(empty())))
+			.andExpect(jsonPath("$._links.events.href", endsWith("/api/events")))
+			
+			.andExpect(jsonPath("$._links.profile.href", not(empty())))
+			.andExpect(jsonPath("$._links.profile.href", endsWith("/api/profile")));
 	}
 }
