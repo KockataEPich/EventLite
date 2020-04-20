@@ -35,7 +35,10 @@ public class EventsController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getAllEvents(Model model) {
-
+		
+		
+		model.addAttribute("upcoming_events", eventService.findUpcoming());
+		model.addAttribute("past_events", eventService.findPast());
 		model.addAttribute("events", eventService.findAll());
 
 		return "events/index";
@@ -76,8 +79,10 @@ public class EventsController {
 
 	@RequestMapping(value= "/search", method= RequestMethod.GET)
 	public String findEventByName(@RequestParam (value= "search", required= false) String name, Model model) {
-		model.addAttribute("search", eventService.findByName(name));
-		model.addAttribute("search", eventService.findByNameContaining(name));
+	
+		model.addAttribute("search_upcoming", eventService.findNameUpcoming(name));
+		model.addAttribute("search_past", eventService.findNamePast(name));
+		
 		return "events/index";
 	}
 

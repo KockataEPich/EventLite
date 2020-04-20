@@ -30,7 +30,7 @@ public class EventServiceTest extends AbstractTransactionalJUnit4SpringContextTe
 	
 	@Test
 	public void testFindEventIfNameContains() throws Exception {
-		Iterable<Event> eventsFound = eventService.findByNameContaining("Test event");
+		Iterable<Event> eventsFound = eventService.findByName("Test event");
 		assertNotNull(eventsFound);
 		
 		for(Event e : eventsFound)
@@ -38,10 +38,10 @@ public class EventServiceTest extends AbstractTransactionalJUnit4SpringContextTe
 		
 		Event newEvent = new Event();
 		newEvent.setName("Test event");
-		eventService.save(newEvent);
+     	eventService.save(newEvent);
 		
-		eventsFound = eventService.findByNameContaining("car");
-		assertNotNull(eventsFound);
+		eventsFound = eventService.findByName("car");
+     	assertNotNull(eventsFound);
 		
 		for(Event e : eventsFound)
 			assertTrue(e.getName().toUpperCase().contains("test event".toUpperCase()));
