@@ -1,4 +1,5 @@
 package uk.ac.man.cs.eventlite.controllers;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,66 +21,66 @@ import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
 
 @Controller
-@RequestMapping(value = "/venues", produces = { MediaType.TEXT_HTML_VALUE })
+@RequestMapping(value = "/venues", produces = {MediaType.TEXT_HTML_VALUE})
 public class VenuesController {
-	@Autowired
-	private EventService eventService;
+    @Autowired
+    private EventService eventService;
 
-	@Autowired
-	private VenueService venueService;
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getAllVenues(Model model) {
-		
-		model.addAttribute("venues", venueService.findAll());
-		
-		return "venues/index";
-	}
-	
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newVenue(Model model) {
-		if (!model.containsAttribute("venue")) {
-			model.addAttribute("venue", new Venue());
-		}
-		
-		return "venues/new";
-	}
-	
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	public String createVenue(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
-			BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
+    @Autowired
+    private VenueService venueService;
 
-		if (errors.hasErrors()) {
-			model.addAttribute("venue", venue);
-			return "venues/new";
-		}
-		
-		//save event passed over by the post request
-		venueService.save(venue);
-		redirectAttrs.addFlashAttribute("ok_message", "New Venue added.");
-		return "redirect:/venues";
-	}
-	
-	@RequestMapping(value= "/search", method= RequestMethod.GET)
-	public String findVenueByName(@RequestParam (value= "search", required= false) String name, Model model) {
-		model.addAttribute("search", venueService.findByName(name));
-		model.addAttribute("search", venueService.findByNameContaining(name));
-		return "venues/index";
-	}
-	
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String renderUpdateVenue(@PathVariable("id") long id, Model model) {
-		model.addAttribute("venue", venueService.findById(id));
-		Iterable<Event> allEvents = eventService.findAll();
-		model.addAttribute("allEvents", allEvents);
-		return "/venues/update";
-	}
+    @RequestMapping(method = RequestMethod.GET)
+    public String getAllVenues(Model model) {
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public String updateVenue(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Venue venue,
-			BindingResult errors, Model model) {
-		venueService.save(venue);
-		return "redirect:/venues";
-	}
+        model.addAttribute("venues", venueService.findAll());
+
+        return "venues/index";
+    }
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public String newVenue(Model model) {
+        if (!model.containsAttribute("venue")) {
+            model.addAttribute("venue", new Venue());
+        }
+
+        return "venues/new";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String createVenue(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
+                              BindingResult errors, Model model, RedirectAttributes redirectAttrs) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("venue", venue);
+            return "venues/new";
+        }
+
+        //save event passed over by the post request
+        venueService.save(venue);
+        redirectAttrs.addFlashAttribute("ok_message", "New Venue added.");
+        return "redirect:/venues";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String findVenueByName(@RequestParam(value = "search", required = false) String name, Model model) {
+        model.addAttribute("search", venueService.findByName(name));
+        model.addAttribute("search", venueService.findByNameContaining(name));
+        return "venues/index";
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String renderUpdateVenue(@PathVariable("id") long id, Model model) {
+        model.addAttribute("venue", venueService.findById(id));
+        Iterable<Event> allEvents = eventService.findAll();
+        model.addAttribute("allEvents", allEvents);
+        return "/venues/update";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public String updateVenue(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Venue venue,
+                              BindingResult errors, Model model) {
+        venueService.save(venue);
+        return "redirect:/venues";
+    }
 }
 

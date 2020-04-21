@@ -6,17 +6,17 @@ import uk.ac.man.cs.eventlite.entities.Venue;
 
 public interface VenueService {
 
-	public long count();
-	
-	public Optional<Venue> findById(long id);
-	
-	public Venue findOne(long id);
-	
-    public Iterable<Venue> findAll();
-	
-	public Iterable<Venue> findByName(String name);
-	
-	public Iterable<Venue> findByNameContaining(String name);
-	
-	public Venue save(Venue venue);
+    long count();
+
+    Optional<Venue> findById(long id);
+
+    Venue findOne(long id);
+
+    Iterable<Venue> findAll();
+
+    Iterable<Venue> findByName(String name);
+
+    Iterable<Venue> findByNameContaining(String name);
+
+    Venue save(Venue venue);
 }
