@@ -35,13 +35,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if (eventService.count() > 0) {
             log.info("Database already populated. Skipping data initialization.");
         } else {// Build and save initial models here.
-            Venue venue1 = new Venue("Chemistry Lecture Theatre C.051", 200, "Oxford st");
+            Venue venue1 = new Venue("Chemistry Lecture Theatre C.051", 200, "Uni Library");
+            venue1.setLat(53.464481);
+            venue1.setLng(-2.235746);
             venueService.save(venue1);
 
             Event AlgoLec = new Event(LocalDate.of(2020, 2, 24), LocalTime.of(10, 0), "Algorithms Lecture", venue1);
 		    eventService.save(AlgoLec);
 		     
-	        Venue venue2 = new Venue("Kilburn G23", 40, "Oxford st");
+	        Venue venue2 = new Venue("Kilburn G23", 40, "Uni Library");
+	        venue2.setLat(53.464481);
+	        venue2.setLng(-2.235746);
 	        venueService.save(venue2);
 	        
 	        Event SoftEngg = new Event(LocalDate.of(2020, 2, 12), LocalTime.now(), "Software Engg", venue2);
