@@ -6,19 +6,29 @@ import java.util.Optional;
 
 public interface EventService {
 
-    public long count();
+    long count();
 
-    public Iterable<Event> findAll();
-	
-	public Iterable<Event> findByName(String name);
-	
-	public Iterable<Event> findByNameContaining(String name);
-	
-	public Optional<Event> findById(long id);
-    
-    public Event save(Event event);
+    Iterable<Event> findAll();
 
-    public Event delete(Event event);
+    // Find the events that are upcoming
+    Iterable<Event> findUpcoming();
 
-    public Optional<Event> deleteById(long id);
+    // Find the past events
+    Iterable<Event> findPast();
+
+    Iterable<Event> findByName(String name);
+
+    Iterable<Event> findNamePast(String name);
+
+    Iterable<Event> findNameUpcoming(String name);
+
+    Optional<Event> findById(long id);
+
+    Event findOne(long id);
+
+    Event save(Event event);
+
+    Event delete(Event event);
+
+    Optional<Event> deleteById(long id);
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,23 +24,23 @@ import com.mapbox.geojson.Point;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.ac.man.cs.eventlite.entities.Event;
+
 import uk.ac.man.cs.eventlite.entities.Venue;
 import uk.ac.man.cs.eventlite.services.EventService;
 import uk.ac.man.cs.eventlite.services.VenueService;
 
 @Controller
-@RequestMapping(value = "/venues", produces = { MediaType.TEXT_HTML_VALUE })
+@RequestMapping(value = "/venues", produces = {MediaType.TEXT_HTML_VALUE})
 public class VenuesController {
-	@Autowired
-	private EventService eventService;
+    @Autowired
+    private EventService eventService;
 
-	@Autowired
-	private VenueService venueService;
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getAllVenues(Model model) {
+    @Autowired
+    private VenueService venueService;
 
-//		insert code for displaying list of venues here
+    @RequestMapping(method = RequestMethod.GET)
+    public String getAllVenues(Model model) {
 
 		return "venues/index";
 	}
@@ -56,6 +57,7 @@ public class VenuesController {
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public String createVenue(@RequestBody @Valid @ModelAttribute("venue") Venue venue,
 			BindingResult errors, Model model, RedirectAttributes redirectAttrs) throws InterruptedException {
+        model.addAttribute("venues", venueService.findAll());
 
 		if (errors.hasErrors()) {
 			model.addAttribute("venue", venue);
@@ -111,5 +113,21 @@ public class VenuesController {
 		model.addAttribute("search", venueService.findByNameContaining(name));
 		return "venues/index";
 	}
+
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String renderUpdateVenue(@PathVariable("id") long id, Model model) {
+        model.addAttribute("venue", venueService.findById(id));
+        Iterable<Event> allEvents = eventService.findAll();
+        model.addAttribute("allEvents", allEvents);
+        return "/venues/update";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public String updateVenue(@PathVariable("id") long id, @RequestBody @Valid @ModelAttribute Venue venue,
+                              BindingResult errors, Model model) {
+        venueService.save(venue);
+        return "redirect:/venues";
+    }
 }
 

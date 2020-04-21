@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layouts/default}">
-
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/default}">
 <head>
   <title>All venues</title>
 </head>
@@ -34,6 +35,23 @@
       <div th:if="${not #lists.isEmpty(search)}">
       <tbody>
         <tr th:each="v : ${search}">
+          <td th:text="${v.name}">Venue</td>
+          <td th:text="${v.address}">Venue address</td>
+          <td th:text="${{v.capacity}}">Venue capacity</td>
+          <td>
+		    <a  th:href="@{/venues/update/{id}(id=${{v.id}})}">Update</a>
+          </td>
+          <td>
+            <div sec:authorize="isAuthenticated()">
+              <a th:href="@{venues/delete/{id}(id=${v.id})}">Delete</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      </div>
+      <div th:if="${#lists.isEmpty(search)}">
+      <tbody>
+        <tr th:each="v : ${venues}">
           <td th:text="${v.name}">Venue</td>
           <td th:text="${v.address}">Venue address</td>
           <td th:text="${{v.capacity}}">Venue capacity</td>

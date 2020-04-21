@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.dao.EventRepository;
 import uk.ac.man.cs.eventlite.entities.Event;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -18,21 +19,41 @@ public class EventServiceImpl implements EventService {
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-    
+
     @Override
-	public Iterable<Event> findByName(String name) {
-		return eventRepository.findAllByName(name);
-	}
-	
-	@Override
-	public Iterable<Event> findByNameContaining(String name) {
-		return eventRepository.findAllByNameContainingIgnoreCaseOrderByDateAscName(name);
-	}
-	
-	@Override
-	public Optional<Event> findById(long id) {
-		return eventRepository.findById(id);
-	}
+    public Iterable<Event> findByName(String name) {
+        return eventRepository.findAllByName(name);
+    }
+
+    // Find the events that are upcoming
+    @Override
+    public Iterable<Event> findUpcoming() {
+        return eventRepository.findByDateGreaterThanEqual(LocalDate.now());
+    }
+
+    // Find the past events
+    @Override
+    public Iterable<Event> findPast() {
+        return eventRepository.findByDateLessThan(LocalDate.now());
+    }
+
+    public Iterable<Event> findNamePast(String name) {
+        return eventRepository.findAllByDateLessThanAndNameContainingIgnoreCaseOrderByDateAscName(LocalDate.now(), name);
+    }
+
+    public Iterable<Event> findNameUpcoming(String name) {
+        return eventRepository.findAllByDateGreaterThanEqualAndNameContainingIgnoreCaseOrderByDateAscName(LocalDate.now(), name);
+    }
+
+    @Override
+    public Optional<Event> findById(long id) {
+        return eventRepository.findById(id);
+    }
+
+    @Override
+    public Event findOne(long id) {
+        return findById(id).orElse(null);
+    }
 
     @Override
     public long count() {
