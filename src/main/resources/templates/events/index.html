@@ -16,6 +16,8 @@
                 <input type="submit" value="Search" class="btn btn-primary">
             </div>
         </form>
+        
+  <h2>Upcoming events</h2>
 
   <table class="table table-striped table-hover">
     <thead>
@@ -33,9 +35,9 @@
       </th>
     </tr>
       </thead>
-      <div th:if="${not #lists.isEmpty(search)}">
+      <div th:if="${not #lists.isEmpty(search_upcoming)}">
       <tbody>
-        <tr th:each="e : ${search}">
+        <tr th:each="e : ${search_upcoming}">
           <td th:text="${e.name}">My Event</td>
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
@@ -52,9 +54,9 @@
         </tr>
       </tbody>
       </div>
-      <div th:if="${#lists.isEmpty(search)}">
+      <div th:if="${#lists.isEmpty(search_upcoming)}">
       <tbody>
-      <tr th:each="e : ${events}">
+      <tr th:each="e : ${upcoming_events}">
         <td th:text="${e.name}">My Event</td>
         <td th:text="${e.venue.name}">Event venue</td>
         <td th:text="${{e.date}}">Event date</td>
@@ -76,6 +78,50 @@
     <p>
       <a class="btn btn-primary" role="button" href="/events/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a new event</a>
     </p>
+    
+    
+  <h3>Past events</h3>
+  
+
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th><i class="fas fa-bolt"></i> Event</th>
+      <th><i class="fas fa-map-marker-alt"></i> Venue</th>
+      <th><i class="fas fa-calendar"></i> Date</th>
+      <th><i class="fas fa-clock"></i> Time</th>
+	  <th><i class="fas fa-align-justify"></i> Description</th>      
+      <th><i class="fas fa-edit"></i> Update</th>
+      <th>
+        <div sec:authorize="isAuthenticated()">
+          <i class="fas fa-trash"></i> Delete
+        </div>
+      </th>
+    </tr>
+      </thead>
+      <div th:if="${not #lists.isEmpty(search_past)}">
+      <tbody>
+        <tr th:each="e : ${search_past}">
+          <td th:text="${e.name}">My Event</td>
+          <td th:text="${e.venue.name}">Event venue</td>
+          <td th:text="${{e.date}}">Event date</td>
+          <td th:text="${{e.time}}">Event time</td>
+          <td th:text="${{e.description}}">Event description</td>
+        </tr>
+      </tbody>
+      </div>
+      <div th:if="${#lists.isEmpty(search_past)}">
+      <tbody>
+      <tr th:each="e : ${past_events}">
+        <td th:text="${e.name}">My Event</td>
+        <td th:text="${e.venue.name}">Event venue</td>
+        <td th:text="${{e.date}}">Event date</td>
+        <td th:text="${{e.time}}">Event time</td>
+        <td th:text="${{e.description}}">Event description</td>        
+      </tr>
+      </tbody>
+      </div>
+    </table>
 
   </div>
 
