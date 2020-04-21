@@ -1,5 +1,7 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +86,17 @@ public class EventsController {
 		model.addAttribute("search_past", eventService.findNamePast(name));
 		
 		return "events/index";
+	}
+	
+	@RequestMapping(value = "/expanded/{id}", method = RequestMethod.GET)
+	public String expandEvent(@PathVariable("id") long id, Model model) 
+	{
+		
+		
+	    model.addAttribute("event", eventService.findOne(id));
+	
+
+		return "/events/expanded";
 	}
 
 	/*@RequestMapping (method = RequestMethod.DELETE,value = "/delete/{id}")

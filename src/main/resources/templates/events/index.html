@@ -38,13 +38,15 @@
       <div th:if="${not #lists.isEmpty(search_upcoming)}">
       <tbody>
         <tr th:each="e : ${search_upcoming}">
-          <td th:text="${e.name}">My Event</td>
+          <td> 
+            <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
+          </td>
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
           <td th:text="${{e.description}}">Event description</td>
           <td>
-			  <a  th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+			  <a th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
           </td>
           <td>
             <div sec:authorize="isAuthenticated()">
@@ -57,7 +59,9 @@
       <div th:if="${#lists.isEmpty(search_upcoming)}">
       <tbody>
       <tr th:each="e : ${upcoming_events}">
-        <td th:text="${e.name}">My Event</td>
+        <td> 
+            <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
+        </td>
         <td th:text="${e.venue.name}">Event venue</td>
         <td th:text="${{e.date}}">Event date</td>
         <td th:text="${{e.time}}">Event time</td>
@@ -102,7 +106,9 @@
       <div th:if="${not #lists.isEmpty(search_past)}">
       <tbody>
         <tr th:each="e : ${search_past}">
-          <td th:text="${e.name}">My Event</td>
+          <td> 
+            <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
+          </td>
           <td th:text="${e.venue.name}">Event venue</td>
           <td th:text="${{e.date}}">Event date</td>
           <td th:text="${{e.time}}">Event time</td>
@@ -113,7 +119,9 @@
       <div th:if="${#lists.isEmpty(search_past)}">
       <tbody>
       <tr th:each="e : ${past_events}">
-        <td th:text="${e.name}">My Event</td>
+        <td> 
+            <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
+            </td>
         <td th:text="${e.venue.name}">Event venue</td>
         <td th:text="${{e.date}}">Event date</td>
         <td th:text="${{e.time}}">Event time</td>
