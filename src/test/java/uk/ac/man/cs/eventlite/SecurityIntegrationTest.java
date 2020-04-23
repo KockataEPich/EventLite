@@ -48,7 +48,7 @@ public class SecurityIntegrationTest {
 	public void setUp() {
 		stateful = new TestRestTemplate(HttpClientOption.ENABLE_COOKIES);
 
-		baseUri = "http://localhost:" + port + "/";
+		baseUri = "http://127.0.0.1:" + port + "/";
 		loginUri = baseUri + "sign-in";
 		loginUriError = loginUri + "?error";
 		logoutUri = baseUri + "sign-out";

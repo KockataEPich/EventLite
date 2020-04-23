@@ -73,6 +73,22 @@
             ><i class="fas fa-trash"></i>Delete</a
           >
         </div>
+        </form>
+        
+       <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading"> Share</div>
+            <div class="panel-body">
+                <form  th:action="@{/events/share/{id}(id=${event.id})}" th:method="post">
+                    <div class="form-group">
+                        <textarea class="form-control" rows="2" name="tweet" id="tweet" th:text="${event.name}" autofocus="autofocus"></textarea>
+                    </div>
+                    <a><button type="submit" class="btn btn-info"><i class="fa fa-bullhorn" aria-hidden="true"></i> Send Tweet</button></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
       </form>
       <div id="map"></div>
       <script th:inline="javascript">
@@ -97,4 +113,10 @@
       </script>
     </div>
   </body>
+</html>
+    </form>
+    
+     
+</div>
+</body>
 </html>
