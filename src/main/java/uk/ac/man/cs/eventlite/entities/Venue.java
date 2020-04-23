@@ -25,6 +25,10 @@ public class Venue {
 
 	private String address;
 
+	private double lng;
+	
+	private double lat;
+
 	public Venue(String name, int capacity, String address) {
 		setName(name);
 		setCapacity(capacity);
@@ -67,5 +71,21 @@ public class Venue {
 	public void setAddress(String address)
 	{
 		this.address = address;
+	}
+	
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+	
+	public double getLng() {
+		return this.lng;
+	}
+	
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	
+	public double getLat() {
+		return this.lat;
 	}
 }

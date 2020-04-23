@@ -1,118 +1,179 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec =""
-      layout:decorate="~{layouts/default}">
-<head>
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layouts/default}"
+>
+  <head>
     <title>All events</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <h1>Events</h1>
+    <script src="https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #map {
+        height: 200px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <h1>Events</h1>
 
-    <form th:object="${event}" th:action="@{/events/search}" method="get">
+      <form th:object="${event}" th:action="@{/events/search}" method="get">
         <div>
-            <input type="text" name="search" placeholder="Search for an event...">
-            <input type="submit" value="Search" class="btn btn-primary">
+          <input
+            type="text"
+            name="search"
+            placeholder="Search for an event..."
+          />
+          <input type="submit" value="Search" class="btn btn-primary" />
         </div>
-    </form>
+      </form>
 
-    <h2>Upcoming events</h2>
+      <h2>Upcoming events</h2>
 
-    <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover">
         <thead>
-        <tr>
+          <tr>
             <th><i class="fas fa-bolt"></i> Event</th>
             <th><i class="fas fa-map-marker-alt"></i> Venue</th>
             <th><i class="fas fa-calendar"></i> Date</th>
             <th><i class="fas fa-clock"></i> Time</th>
             <th><i class="fas fa-align-justify"></i> Description</th>
             <th><i class="fas fa-edit"></i> Update</th>
-        </tr>
+          </tr>
         </thead>
         <div th:if="${not #lists.isEmpty(search_upcoming)}">
-            <tbody>
+          <tbody>
             <tr th:each="e : ${search_upcoming}">
-                <td>
-                    <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
-                </td>
-                <td th:text="${e.venue.name}">Event venue</td>
-                <td th:text="${{e.date}}">Event date</td>
-                <td th:text="${{e.time}}">Event time</td>
-                <td th:text="${{e.description}}">Event description</td>
-                <td>
-                    <a th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
-                </td>
+              <td>
+                <a
+                  th:href="@{/events/expanded/{id}(id=${{e.id}})}"
+                  th:text="${e.name}"
+                  >My Event</a
+                >
+              </td>
+              <td th:text="${e.venue.name}">Event venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+              <td th:text="${{e.description}}">Event description</td>
+              <td>
+                <a th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+              </td>
             </tr>
-            </tbody>
+          </tbody>
         </div>
         <div th:if="${#lists.isEmpty(search_upcoming)}">
-            <tbody>
+          <tbody>
             <tr th:each="e : ${upcoming_events}">
-                <td>
-                    <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
-                </td>
-                <td th:text="${e.venue.name}">Event venue</td>
-                <td th:text="${{e.date}}">Event date</td>
-                <td th:text="${{e.time}}">Event time</td>
-                <td th:text="${{e.description}}">Event description</td>
-                <td>
-                    <a th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
-                </td>
+              <td>
+                <a
+                  th:href="@{/events/expanded/{id}(id=${{e.id}})}"
+                  th:text="${e.name}"
+                  >My Event</a
+                >
+              </td>
+              <td th:text="${e.venue.name}">Event venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+              <td th:text="${{e.description}}">Event description</td>
+              <td>
+                <a th:href="@{/events/update/{id}(id=${{e.id}})}">Update</a>
+              </td>
             </tr>
-            </tbody>
+          </tbody>
         </div>
-    </table>
+      </table>
 
-    <p>
-        <a class="btn btn-primary" role="button" href="/events/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a
-            new event</a>
-    </p>
+      <p>
+        <a class="btn btn-primary" role="button" href="/events/new"
+          ><i class="fas fa-plus" aria-hidden="true"></i> Add a new event</a
+        >
+      </p>
+      <div id="map"></div>
 
+      <h3>Past events</h3>
 
-    <h3>Past events</h3>
-
-
-    <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover">
         <thead>
-        <tr>
+          <tr>
             <th><i class="fas fa-bolt"></i> Event</th>
             <th><i class="fas fa-map-marker-alt"></i> Venue</th>
             <th><i class="fas fa-calendar"></i> Date</th>
             <th><i class="fas fa-clock"></i> Time</th>
             <th><i class="fas fa-align-justify"></i> Description</th>
             <th><i class="fas fa-edit"></i> Update</th>
-        </tr>
+          </tr>
         </thead>
         <div th:if="${not #lists.isEmpty(search_past)}">
-            <tbody>
+          <tbody>	
             <tr th:each="e : ${search_past}">
-                <td>
-                    <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
-                </td>
-                <td th:text="${e.venue.name}">Event venue</td>
-                <td th:text="${{e.date}}">Event date</td>
-                <td th:text="${{e.time}}">Event time</td>
-                <td th:text="${{e.description}}">Event description</td>
+              <td>
+                <a
+                  th:href="@{/events/expanded/{id}(id=${{e.id}})}"
+                  th:text="${e.name}"
+                  >My Event</a
+                >
+              </td>
+              <td th:text="${e.venue.name}">Event venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+              <td th:text="${{e.description}}">Event description</td>
             </tr>
-            </tbody>
+          </tbody>
         </div>
         <div th:if="${#lists.isEmpty(search_past)}">
-            <tbody>
+          <tbody>
             <tr th:each="e : ${past_events}">
-                <td>
-                    <a th:href="@{/events/expanded/{id}(id=${{e.id}})}" th:text="${e.name}">My Event</a>
-                </td>
-                <td th:text="${e.venue.name}">Event venue</td>
-                <td th:text="${{e.date}}">Event date</td>
-                <td th:text="${{e.time}}">Event time</td>
-                <td th:text="${{e.description}}">Event description</td>
+              <td>
+                <a
+                  th:href="@{/events/expanded/{id}(id=${{e.id}})}"
+                  th:text="${e.name}"
+                  >My Event</a
+                >
+              </td>
+              <td th:text="${e.venue.name}">Event venue</td>
+              <td th:text="${{e.date}}">Event date</td>
+              <td th:text="${{e.time}}">Event time</td>
+              <td th:text="${{e.description}}">Event description</td>
             </tr>
-            </tbody>
+          </tbody>
         </div>
-    </table>
+      </table>
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        var events = /*[[${upcoming_events}]]*/ [];
+        var markers = [];
+        L.mapbox.accessToken =
+          "pk.eyJ1IjoiY2hyaXNuaWsiLCJhIjoiY2s5MDJ0ZGNvMHhmNTNsdGE1aGNzODhhZiJ9.cDsPoQeKp5JCO4VzzL9lxA";
+        var map = L.mapbox
+          .map("map")
+          .addLayer(L.mapbox.styleLayer("mapbox://styles/mapbox/streets-v11"));
 
-</div>
+        events.forEach((e, i) => {
+          var marker = L.marker([e.venue.lat, e.venue.lng], {
+            icon: L.mapbox.marker.icon({
+              "marker-size": "large",
+              "marker-symbol": i+1,
+              "marker-color": "#fa0",
+            }),
+          })
+            .bindPopup(e.name)
+            .addTo(map);
+          markers.push(marker);
 
-</body>
+        });
+        var markersGroup = new L.featureGroup(markers);
+        map.fitBounds(markersGroup.getBounds());
+        /*]]>*/
+      </script>
+    </div>
+  </body>
 </html>
