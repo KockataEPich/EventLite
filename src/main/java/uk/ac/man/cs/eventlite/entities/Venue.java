@@ -1,5 +1,6 @@
 package uk.ac.man.cs.eventlite.entities;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -67,5 +68,22 @@ public class Venue {
 	public void setAddress(String address)
 	{
 		this.address = address;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Venue)) return false;
+		Venue venue = (Venue) o;
+		return id == venue.id &&
+				capacity == venue.capacity &&
+				Objects.equals(name, venue.name) &&
+				Objects.equals(events, venue.events) &&
+				Objects.equals(address, venue.address);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, events, capacity, address);
 	}
 }
