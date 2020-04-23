@@ -83,12 +83,10 @@
         var map = L.mapbox
           .map("map")
           .addLayer(L.mapbox.styleLayer("mapbox://styles/mapbox/streets-v11"));
-        var totalLat = 0;
-        var totalLng = 0;
+
           L.marker([event.venue.lat, event.venue.lng], {
             icon: L.mapbox.marker.icon({
               "marker-size": "large",
-              "marker-symbol": 0,
               "marker-color": "#fa0",
             }),
           })

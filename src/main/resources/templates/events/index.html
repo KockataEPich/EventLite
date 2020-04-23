@@ -97,6 +97,7 @@
           ><i class="fas fa-plus" aria-hidden="true"></i> Add a new event</a
         >
       </p>
+      <div id="map"></div>
 
       <h3>Past events</h3>
 
@@ -112,7 +113,7 @@
           </tr>
         </thead>
         <div th:if="${not #lists.isEmpty(search_past)}">
-          <tbody>
+          <tbody>	
             <tr th:each="e : ${search_past}">
               <td>
                 <a
@@ -146,34 +147,31 @@
           </tbody>
         </div>
       </table>
-      <div id="map"></div>
       <script th:inline="javascript">
         /*<![CDATA[*/
         var events = /*[[${upcoming_events}]]*/ [];
+        var markers = [];
         L.mapbox.accessToken =
           "pk.eyJ1IjoiY2hyaXNuaWsiLCJhIjoiY2s5MDJ0ZGNvMHhmNTNsdGE1aGNzODhhZiJ9.cDsPoQeKp5JCO4VzzL9lxA";
         var map = L.mapbox
           .map("map")
           .addLayer(L.mapbox.styleLayer("mapbox://styles/mapbox/streets-v11"));
-        var totalLat = 0;
-        var totalLng = 0;
+
         events.forEach((e, i) => {
-          console.log(e.venue.lng, e.venue.lat);
-          L.marker([e.venue.lat, e.venue.lng], {
+          var marker = L.marker([e.venue.lat, e.venue.lng], {
             icon: L.mapbox.marker.icon({
               "marker-size": "large",
-              "marker-symbol": i,
+              "marker-symbol": i+1,
               "marker-color": "#fa0",
             }),
           })
             .bindPopup(e.name)
             .addTo(map);
-          totalLat += e.venue.lat;
-          totalLng += e.venue.lng;
+          markers.push(marker);
+
         });
-        avgLat = totalLat / events.length;
-        avgLng = totalLng / events.length;
-        map.setView([avgLat, avgLng], 14);
+        var markersGroup = new L.featureGroup(markers);
+        map.fitBounds(markersGroup.getBounds());
         /*]]>*/
       </script>
     </div>
