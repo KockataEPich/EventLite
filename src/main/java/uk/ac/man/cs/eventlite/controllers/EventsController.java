@@ -98,7 +98,7 @@ public class EventsController {
     @GetMapping("/delete/{id}")
     public String deleteEvent(@PathVariable("id") long id, Model model) {
         Event event = eventService.deleteById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid event ID:" + id));
         model.addAttribute("users", eventService.findAll());
         return "redirect:/events";
     }

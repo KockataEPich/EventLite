@@ -3,9 +3,13 @@ package uk.ac.man.cs.eventlite.services;
 import org.springframework.stereotype.Service;
 import uk.ac.man.cs.eventlite.dao.EventRepository;
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Venue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -85,4 +89,14 @@ public class EventServiceImpl implements EventService {
         return requestedEvent;
     }
 
+    @Override
+    public List<Event> findByVenue(Venue venue) {
+        Iterable<Event> eventIterable = findAll();
+        List<Event> allEvents = new ArrayList<>();
+        eventIterable.forEach(allEvents::add);
+        return allEvents.stream()
+                .filter(e -> e.getVenue()
+                        .equals(venue))
+                .collect(Collectors.toList());
+    }
 }
