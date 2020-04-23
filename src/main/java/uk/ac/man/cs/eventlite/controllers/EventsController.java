@@ -1,8 +1,19 @@
 package uk.ac.man.cs.eventlite.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+
+import twitter4j.ResponseList;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.User;
+import twitter4j.TweetEntity;
+import uk.ac.man.cs.eventlite.config.TwitterServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import uk.ac.man.cs.eventlite.entities.Event;
+import uk.ac.man.cs.eventlite.entities.Tweet;
 import uk.ac.man.cs.eventlite.entities.Venue;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,17 +46,58 @@ public class EventsController {
 
     @Autowired
     private VenueService venueService;
+    
+    TwitterServices twitterService = new TwitterServices();
+    
+    
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getAllEvents(Model model) {
+    public String getAllEvents(Model model) throws TwitterException {
 
 
         model.addAttribute("upcoming_events", eventService.findUpcoming());
         model.addAttribute("past_events", eventService.findPast());
         model.addAttribute("events", eventService.findAll());
+        
+        ResponseList<Status> statuses = twitterService.getTimeLineStatus();
+        
+        List<Tweet> tweets = new ArrayList<Tweet>();
+        for(int i = 0; i < statuses.size(); i++)
+        {
+        	
+        	Tweet tweet = new Tweet();
+            tweet.setStatus(statuses.get(i));
+        	tweet.setURL("https://twitter.com/" + statuses.get(i).getUser().getScreenName() 
+        		    + "/status/" + statuses.get(i).getId());
+        	
+        	tweets.add(tweet);
+        }
+		model.addAttribute("tweets", tweets);
 
         return "events/index";
     }
+    
+    @RequestMapping(value = "share/{id}", method = RequestMethod.POST)
+	public String shareEvent(@PathVariable("id") long id,
+							 @RequestParam(value = "tweet", required = false, defaultValue = "World") String tweet,
+							 Model model, RedirectAttributes redirectAttrs) {
+
+    	String response = "Something went wrong";
+        try {
+			response = twitterService.createTweet(tweet);
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        model.addAttribute("ok_message", response);
+        model.addAttribute("event", eventService.findOne(id));
+
+		return "/events/expanded";
+	}
+    
+    
+    
 
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newEvent(Model model) {

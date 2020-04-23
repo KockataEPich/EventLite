@@ -68,6 +68,29 @@
         <a class="btn btn-primary" role="button" href="/events/new"><i class="fas fa-plus" aria-hidden="true"></i> Add a
             new event</a>
     </p>
+    
+    
+    
+    <div class="panel panel-info">
+      <div class="panel-heading">Tweet Feed</div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover" th:if="${tweets}">
+          <thead>
+          <tr>
+            <th><i class="fa fa-at"></i> Date</th>
+            <th><i class="fa fa-clock-o"></i>Text</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr th:each="t : ${tweets}">
+            <td th:text="${{t.getStatus().getCreatedAt()}}">Tweet Date/td>
+            <td>
+            <a th:href="${{t.getUrl()}}" th:text="${{t.status.getText()}}">Tweet Text</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
 
 
     <h3>Past events</h3>
