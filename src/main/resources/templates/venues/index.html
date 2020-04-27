@@ -35,7 +35,9 @@
       <div th:if="${not #lists.isEmpty(search)}">
       <tbody>
         <tr th:each="v : ${search}">
-          <td th:text="${v.name}">Venue</td>
+          <td> <a th:href="@{/venues/expanded/{id}(id=${{v.id}})}"
+                  th:text="${v.name}">Venue</a>       
+          </td>
           <td th:text="${v.address}">Venue address</td>
           <td th:text="${{v.capacity}}">Venue capacity</td>
           <td>
@@ -52,7 +54,9 @@
       <div th:if="${#lists.isEmpty(search)}">
       <tbody>
         <tr th:each="v : ${venues}">
-          <td th:text="${v.name}">Venue</td>
+          <td> <a th:href="@{/venues/expanded/{id}(id=${{v.id}})}"
+                  th:text="${v.name}">Venue</a>       
+          </td>
           <td th:text="${v.address}">Venue address</td>
           <td th:text="${{v.capacity}}">Venue capacity</td>
           <td>

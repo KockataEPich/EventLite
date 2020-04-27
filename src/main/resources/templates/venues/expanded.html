@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  layout:decorate="~{layouts/default}"
+  lang="uk"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.ultraq.net.nz/thymeleaf/layout "
+>
+  <head>
+    <title>Venue Detail</title>
+        <script src="https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #map {
+        height: 200px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <h1>Venue</h1>
+
+      <form
+        action="#"
+        th:action="@{/venues/expanded/{id}(id=${{venue.id}})}"
+        th:object="${venue}"
+        method="post"
+      >
+        <div class="row">
+          <div class="col-md-6">
+            <h4><i class="fa fa-bolt"></i> Name</h4>
+            <blockquote>
+              <p th:text="${venue.name}">My Venue</p>
+            </blockquote>
+
+            <h4><i class="fa fa-map-marker-alt"></i> Adress</h4>
+            <blockquote>
+              <p th:text="${venue.address}">Venue adress</p>
+            </blockquote>
+
+            <h4><i class="fa fa-calendar"></i> Capacity</h4>
+            <blockquote>
+              <p th:text="${venue.capacity}">Event time</p>
+            </blockquote>
+
+          </div>
+        </div>
+      </form>
+      <form
+        th:action="@{venues/delete/{id}(id=${{venue.id}})}"
+        th:method="delete"
+      >
+        <div sec:authorize="isAuthenticated()">
+          <a th:href="@{~/venues/delete/{id}(id=${venue.id})}"
+            ><i class="fas fa-trash"></i>Delete</a
+          >
+        </div>
+        </form>
+       
+   
+    
+     
+</div>
+</body>
+</html>

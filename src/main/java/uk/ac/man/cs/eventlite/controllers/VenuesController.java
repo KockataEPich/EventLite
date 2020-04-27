@@ -130,6 +130,13 @@ public class VenuesController {
         venueService.save(venue);
         return "redirect:/venues";
     }
+    
+    @RequestMapping(value = "/expanded/{id}", method = RequestMethod.GET)
+    public String expandEvent(@PathVariable("id") long id, Model model) {
+
+        model.addAttribute("venue", venueService.findOne(id));
+        return "/venues/expanded";
+    }
 
 
     @GetMapping("/delete/{id}")
