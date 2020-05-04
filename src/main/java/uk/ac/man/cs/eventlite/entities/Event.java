@@ -24,7 +24,7 @@ public class Event {
 	@GeneratedValue
 	private long id;
 
-	@NotNull(message = "The event date cannot be empt.")
+	@NotNull(message = "The event date cannot be empty.")
 	@Future
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

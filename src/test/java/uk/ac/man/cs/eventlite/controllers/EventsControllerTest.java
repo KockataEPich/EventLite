@@ -136,9 +136,22 @@ public class EventsControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/events").with(user("Mustafa").roles(Security.ADMIN_ROLE))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).accept(MediaType.TEXT_HTML_VALUE).with(csrf())
                 .param("name", "Wallets R us")
-                .param("date", "2020-05-25")
+                .param("date", "2019-05-25")
                 .param("time", "12:12")
+                .param("venue.id", "1")
                 .param("description", "Making wallets because its very fun"))
+                .andExpect(view().name("events/new"))
+                .andExpect(status().isOk());
+
+        verifyZeroInteractions(eventService);
+
+    }
+    @Test
+    public void postEventWithNoData() throws Exception {
+        ArgumentCaptor<Event> arg = ArgumentCaptor.forClass(Event.class);
+
+        mvc.perform(MockMvcRequestBuilders.post("/events").with(user("Mustafa").roles(Security.ADMIN_ROLE))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).accept(MediaType.TEXT_HTML_VALUE).with(csrf()))
                 .andExpect(view().name("events/new"))
                 .andExpect(status().isOk());
 

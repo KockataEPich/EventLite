@@ -83,5 +83,30 @@ public class VenuesControllerTest {
 
 
     }
+    @Test
+    public void postVenueWithError() throws Exception {
+        ArgumentCaptor<Venue> arg = ArgumentCaptor.forClass(Venue.class);
+
+        mvc.perform(MockMvcRequestBuilders.post("/venues").with(user("Mustafa").roles(Security.ADMIN_ROLE))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).accept(MediaType.TEXT_HTML_VALUE).with(csrf())
+                .param("name", "Factory of Cats")
+                .param("capacity", "-6")
+                .param("address", "st bernard crossroads"))
+                .andExpect(view().name("venues/new"))
+                .andExpect(status().isOk());
+
+
+    }
+    @Test
+    public void postVenueWithNoData() throws Exception {
+        ArgumentCaptor<Venue> arg = ArgumentCaptor.forClass(Venue.class);
+
+        mvc.perform(MockMvcRequestBuilders.post("/venues").with(user("Mustafa").roles(Security.ADMIN_ROLE))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE).accept(MediaType.TEXT_HTML_VALUE).with(csrf()))
+                .andExpect(view().name("venues/new"))
+                .andExpect(status().isOk());
+
+
+    }
 
 }
