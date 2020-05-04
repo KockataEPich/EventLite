@@ -60,7 +60,11 @@
                   >My Event</a
                 >
               </td>
-              <td th:text="${e.venue.name}">Event venue</td>
+              <td>
+              <a
+                  th:href="@{/venues/expanded/{id}(id=${{e.venue.id}})}"
+                  th:text="${e.venue.name}">Venue</a>
+              </td>
               <td th:text="${{e.date}}">Event date</td>
               <td th:text="${{e.time}}">Event time</td>
               <td th:text="${{e.description}}">Event description</td>
@@ -77,10 +81,13 @@
                 <a
                   th:href="@{/events/expanded/{id}(id=${{e.id}})}"
                   th:text="${e.name}"
-                  >My Event</a
-                >
+                  >My Event</a>
               </td>
-              <td th:text="${e.venue.name}">Event venue</td>
+              <td>
+              <a
+                  th:href="@{/venues/expanded/{id}(id=${{e.venue.id}})}"
+                  th:text="${e.venue.name}">Venue</a>
+              </td>
               <td th:text="${{e.date}}">Event date</td>
               <td th:text="${{e.time}}">Event time</td>
               <td th:text="${{e.description}}">Event description</td>
@@ -145,7 +152,11 @@
                   >My Event</a
                 >
               </td>
-              <td th:text="${e.venue.name}">Event venue</td>
+              <td>
+              <a
+                  th:href="@{/venues/expanded/{id}(id=${{e.venue.id}})}"
+                  th:text="${e.venue.name}">Venue</a>
+              </td>
               <td th:text="${{e.date}}">Event date</td>
               <td th:text="${{e.time}}">Event time</td>
               <td th:text="${{e.description}}">Event description</td>
@@ -162,7 +173,11 @@
                   >My Event</a
                 >
               </td>
-              <td th:text="${e.venue.name}">Event venue</td>
+              <td>
+              <a
+                  th:href="@{/venues/expanded/{id}(id=${{e.venue.id}})}"
+                  th:text="${e.venue.name}">Venue</a>
+              </td>
               <td th:text="${{e.date}}">Event date</td>
               <td th:text="${{e.time}}">Event time</td>
               <td th:text="${{e.description}}">Event description</td>

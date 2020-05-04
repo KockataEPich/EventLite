@@ -44,7 +44,9 @@
 
             <h4><i class="fa fa-map-marker"></i> Venue</h4>
             <blockquote>
-              <p th:text="${event.venue.name}">Event venue</p>
+             <a
+                  th:href="@{/venues/expanded/{id}(id=${{event.venue.id}})}"
+                  th:text="${event.venue.name}">Venue</a>
             </blockquote>
 
             <h4><i class="fa fa-calendar"></i> Date</h4>
@@ -52,12 +54,12 @@
               <p th:text="${event.date}">Event date</p>
             </blockquote>
 
-            <h4><i class="fa fa-clock-o"></i> Time</h4>
+            <h4><i class="fa fa-clock"></i> Time</h4>
             <blockquote>
               <p th:text="${event.time}">Event time</p>
             </blockquote>
 
-            <h4><i class="fa fa-file-word-o"></i> Description</h4>
+            <h4><i class="fa fa-file-word"></i> Description</h4>
             <blockquote>
               <p th:text="${event.description}">Event Description</p>
             </blockquote>
